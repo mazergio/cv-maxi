@@ -30,6 +30,8 @@ fetch(configURL)
     }
 
     console.log("Config cargada:", config);
+    document.getElementById("version_cv").textContent = config.version_cv;
+    document.getElementById("ultima_actualizacion").textContent = config.ultima_actualizacion;
 
     document.getElementById("version_cv").textContent =
   "Versión: " + config.version_cv;
