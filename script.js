@@ -1,11 +1,30 @@
-// MOCK DATA (después lo conectamos a Google Sheets)
+// PERFIL DESDE GOOGLE SHEETS
 
-document.getElementById("nombre").textContent = "Maxi López";
-document.getElementById("titulo").textContent = "Administrativo | Formación técnica y filosófica";
-document.getElementById("ubicacion").textContent = "La Paz, Entre Ríos";
-document.getElementById("resumen").textContent =
-  "Administrativo con formación en áreas técnicas, educación y filosofía. En constante capacitación, con orientación a la gestión, automatización y mejora de procesos.";
+const perfilURL = "https://chatgpt.com/c/69759923-f4a8-8332-8f91-0becde12eb44PEGÁ_ACÁ_TU_LINK_CSV";
 
+fetch(perfilURL)
+  .then(res => res.text())
+  .then(text => {
+    const filas = text.split("\n").map(f => f.split(","));
+    
+    filas.forEach(fila => {
+      const clave = fila[0]?.trim();
+      const valor = fila[1]?.trim();
+
+      if (clave === "nombre_completo") {
+        document.getElementById("nombre").textContent = valor;
+      }
+      if (clave === "titulo_principal") {
+        document.getElementById("titulo").textContent = valor;
+      }
+      if (clave === "ubicacion") {
+        document.getElementById("ubicacion").textContent = valor;
+      }
+      if (clave === "resumen_profesional") {
+        document.getElementById("resumen").textContent = valor;
+      }
+    });
+  });
 const experiencia = [
   {
     puesto: "Empleado administrativo",
