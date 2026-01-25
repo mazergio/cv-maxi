@@ -1,30 +1,45 @@
-// PERFIL DESDE GOOGLE SHEETS
+// PERFIL DESDE GOOGLE SHEETS (CSV)
 
-const perfilURL = "https://chatgpt.com/c/69759923-f4a8-8332-8f91-0becde12eb44PEGÁ_ACÁ_TU_LINK_CSV";
+const perfilURL = "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY//gviz/tq?tqx=out:csv&gid=123456";
 
 fetch(perfilURL)
   .then(res => res.text())
   .then(text => {
-    const filas = text.split("\n").map(f => f.split(","));
-    
-    filas.forEach(fila => {
-      const clave = fila[0]?.trim();
-      const valor = fila[1]?.trim();
+    const filas = text
+      .split("\n")
+      .map(f => f.trim())
+      .filter(f => f.length > 0)
+      .map(f => f.split(/,(.+)/)); // separa SOLO en la primera coma
+
+    // arrancamos desde 1 para saltear encabezados (clave,valor)
+    for (let i = 1; i < filas.length; i++) {
+      const clave = filas[i][0]?.trim();
+      const valor = filas[i][1]?.trim();
+
+      if (!clave || !valor) continue;
 
       if (clave === "nombre_completo") {
         document.getElementById("nombre").textContent = valor;
       }
+
       if (clave === "titulo_principal") {
         document.getElementById("titulo").textContent = valor;
       }
+
       if (clave === "ubicacion") {
         document.getElementById("ubicacion").textContent = valor;
       }
+
       if (clave === "resumen_profesional") {
         document.getElementById("resumen").textContent = valor;
       }
-    });
-  });
+    }
+  })
+  .catch(err => console.error("Error cargando perfil:", err));
+
+
+// EXPERIENCIA (por ahora hardcodeada)
+
 const experiencia = [
   {
     puesto: "Empleado administrativo",
@@ -35,14 +50,20 @@ const experiencia = [
 ];
 
 const experienciaDiv = document.getElementById("experiencia");
+
 experiencia.forEach(e => {
   const div = document.createElement("div");
   div.className = "item";
-  div.innerHTML = `<strong>${e.puesto} – ${e.empresa}</strong><br>
-                   <em>${e.fechas}</em><br>
-                   ${e.descripcion}`;
+  div.innerHTML = `
+    <strong>${e.puesto} – ${e.empresa}</strong><br>
+    <em>${e.fechas}</em><br>
+    ${e.descripcion}
+  `;
   experienciaDiv.appendChild(div);
 });
+
+
+// CURSOS AGRUPADOS
 
 const cursosAgrupados = {
   "Administración": ["Gestión PyME", "Administración general"],
@@ -52,6 +73,7 @@ const cursosAgrupados = {
 };
 
 const cursosDiv = document.getElementById("cursos-agrupados");
+
 for (const area in cursosAgrupados) {
   const div = document.createElement("div");
   div.className = "area-group";
