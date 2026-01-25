@@ -30,6 +30,12 @@ fetch(configURL)
     }
 
     console.log("Config cargada:", config);
+
+    document.getElementById("version_cv").textContent =
+  "Versión: " + config.version_cv;
+
+document.getElementById("ultima_actualizacion").textContent =
+  "Última actualización: " + config.ultima_actualizacion;
   })
   .catch(err => console.error("Error cargando config:", err));
   
