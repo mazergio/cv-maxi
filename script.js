@@ -11,12 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .split("\n")
         .map(f => f.trim())
         .filter(Boolean)
-        .map(f =>
-          f.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-           .map(c => c.replace(/^"|"$/g, "").trim())
-        );
+        .map(f => f.split(";").map(c => c.replace(/^"|"$/g, "").trim()));
 
-      // filas[0] = encabezados → "clave","valor"
+      // fila 0 = headers → clave | valor
       for (let i = 1; i < filas.length; i++) {
         const clave = filas[i][0];
         const valor = filas[i][1];
@@ -28,11 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (clave === "linkedin") {
           el.href = valor;
-        } 
+        }
         else if (clave === "email") {
           el.href = "mailto:" + valor;
           el.textContent = valor;
-        } 
+        }
         else {
           el.textContent = valor;
         }
