@@ -1,3 +1,4 @@
+alert("JS NUEVO CARGADO");
 document.addEventListener("DOMContentLoaded", () => {
 
   const perfilURL =
