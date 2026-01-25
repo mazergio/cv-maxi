@@ -1,44 +1,40 @@
 // PERFIL DESDE GOOGLE SHEETS (CSV)
 
-const perfilURL = "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY//gviz/tq?tqx=out:csv&gid=123456";
+const perfilURL =
+  "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY/gviz/tq?tqx=out:csv&gid=0"; 
+// 👆 asegurate de que el gid sea el de la hoja correcta
 
 fetch(perfilURL)
-  .then(res => res.text())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("No se pudo cargar el CSV");
+    }
+    return res.text();
+  })
   .then(text => {
     const filas = text
       .split("\n")
       .map(f => f.trim())
       .filter(f => f.length > 0)
-      .map(f => f.split(/,(.+)/)); // separa SOLO en la primera coma
+      .map(f => f.split(/,(.+)/)); // solo primera coma
 
-    // arrancamos desde 1 para saltear encabezados (clave,valor)
+    // salteamos encabezados: clave,valor
     for (let i = 1; i < filas.length; i++) {
-      const clave = filas[i][0]?.trim();
-      const valor = filas[i][1]?.trim();
+      const clave = filas[i][0];
+      const valor = filas[i][1];
 
       if (!clave || !valor) continue;
 
-      if (clave === "nombre_completo") {
-        document.getElementById("nombre").textContent = valor;
-      }
-
-      if (clave === "titulo_principal") {
-        document.getElementById("titulo").textContent = valor;
-      }
-
-      if (clave === "ubicacion") {
-        document.getElementById("ubicacion").textContent = valor;
-      }
-
-      if (clave === "resumen_profesional") {
-        document.getElementById("resumen").textContent = valor;
+      const elemento = document.getElementById(clave);
+      if (elemento) {
+        elemento.textContent = valor;
       }
     }
   })
   .catch(err => console.error("Error cargando perfil:", err));
 
 
-// EXPERIENCIA (por ahora hardcodeada)
+// EXPERIENCIA (hardcodeada por ahora)
 
 const experiencia = [
   {
