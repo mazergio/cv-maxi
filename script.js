@@ -11,9 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .split("\n")
         .map(f => f.trim())
         .filter(Boolean)
-        .map(f => f.split(";").map(c => c.replace(/^"|"$/g, "").trim()));
+        .map(f =>
+          f.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+           .map(c => c.replace(/^"|"$/g, "").trim())
+        );
 
-      // fila 0 = headers → clave | valor
       for (let i = 1; i < filas.length; i++) {
         const clave = filas[i][0];
         const valor = filas[i][1];
@@ -36,41 +38,5 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
     .catch(err => console.error("Error cargando perfil:", err));
-
-  // EXPERIENCIA (mock)
-  const experiencia = [
-    {
-      puesto: "Empleado administrativo",
-      empresa: "Estudio contable",
-      fechas: "2020 - Actual",
-      descripcion: "Gestión administrativa, cobranzas, control de honorarios."
-    }
-  ];
-
-  const experienciaDiv = document.getElementById("experiencia");
-  experiencia.forEach(e => {
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
-      <strong>${e.puesto} – ${e.empresa}</strong><br>
-      <em>${e.fechas}</em><br>
-      ${e.descripcion}
-    `;
-    experienciaDiv.appendChild(div);
-  });
-
-  // CURSOS (mock)
-  const cursosAgrupados = {
-    "Administración": ["Gestión PyME", "Administración general"],
-    "Tecnología": ["Domótica", "Robótica"],
-    "Educación / Filosofía": ["Didáctica", "Filosofía"]
-  };
-
-  const cursosDiv = document.getElementById("cursos-agrupados");
-  for (const area in cursosAgrupados) {
-    const div = document.createElement("div");
-    div.innerHTML = `<strong>${area}</strong>: ${cursosAgrupados[area].join(" | ")}`;
-    cursosDiv.appendChild(div);
-  }
 
 });
