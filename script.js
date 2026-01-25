@@ -1,35 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // PERFIL DESDE GOOGLE SHEETS (CSV)
   const perfilURL =
     "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY/gviz/tq?tqx=out:csv&gid=0";
 
   fetch(perfilURL)
     .then(res => {
-      if (!res.ok) {
-        throw new Error("No se pudo cargar el CSV");
-      }
+      if (!res.ok) throw new Error("No se pudo cargar el CSV");
       return res.text();
     })
     .then(text => {
+
       const filas = text
         .split("\n")
         .map(f => f.trim())
-        .filter(f => f.length > 0)
-        .map(f => f.split(/,(.+)/)); // solo primera coma
+        .filter(Boolean)
+        .map(f =>
+          f.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+            .map(c => c.replace(/^"|"$/g, "").trim())
+        );
 
-      // salteamos encabezados
-      for (let i = 1; i < filas.length; i++) {
-        const clave = filas[i][0]?.trim();
-        const valor = filas[i][1]?.trim().replace(/^"|"$/g, "");
-
-        if (!clave || !valor) continue;
-
-        const elemento = document.getElementById(clave);
-        if (elemento) {
-          elemento.textContent = valor;
-        }
+      if (filas.length < 2) {
+        console.error("CSV sin datos suficientes");
+        return;
       }
+
+      const headers = filas[0];
+      const valores = filas[1];
+
+      headers.forEach((id, i) => {
+        const valor = valores[i];
+        if (!valor) return;
+
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        if (id === "linkedin") {
+          el.href = valor;
+        } else if (id === "email") {
+          el.href = "mailto:" + valor;
+          el.textContent = valor;
+        } else {
+          el.textContent = valor;
+        }
+      });
     })
     .catch(err => console.error("Error cargando perfil:", err));
 
