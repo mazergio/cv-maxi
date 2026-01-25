@@ -173,8 +173,16 @@ fetch(configURL)
         areaDiv.className = "area-group";
 
         const cursosTexto = grupos[area]
-          .map(c => `${c.curso} (${c.institucion}, ${c.anio})`)
-          .join(" | ");
+  .map(c => {
+    let extra = `(${c.institucion}, ${c.anio})`;
+
+    if (config.mostrar_horas_cursos === "TRUE" && c.horas) {
+      extra += ` – ${c.horas} hs`;
+    }
+
+    return `${c.curso} ${extra}`;
+  })
+  .join(" | ");
 
         areaDiv.innerHTML = `<strong>${area}</strong> ▸ ${cursosTexto}`;
         cursosDiv.appendChild(areaDiv);
