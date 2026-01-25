@@ -7,14 +7,18 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(res => res.text())
     .then(text => {
 
+      // normaliza saltos de línea y BOM
+      text = text.replace(/\uFEFF/g, "").trim();
+
       const filas = text
-        .split("\n")
+        .split(/\r?\n/)
         .map(f => f.trim())
         .filter(Boolean)
-        .map(f =>
-          f.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-           .map(c => c.replace(/^"|"$/g, "").trim())
-        );
+        .map(f => {
+          // detecta separador automáticamente
+          const sep = f.includes(";") ? ";" : ",";
+          return f.split(sep).map(c => c.replace(/^"|"$/g, "").trim());
+        });
 
       for (let i = 1; i < filas.length; i++) {
         const clave = filas[i][0];
