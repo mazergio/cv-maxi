@@ -16,37 +16,34 @@ document.addEventListener("DOMContentLoaded", () => {
         .filter(Boolean)
         .map(f =>
           f.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-            .map(c => c.replace(/^"|"$/g, "").trim())
+           .map(c => c.replace(/^"|"$/g, "").trim())
         );
 
-      if (filas.length < 2) {
-        console.error("CSV sin datos suficientes");
-        return;
-      }
+      // fila 0 = headers ("clave","valor")
+      for (let i = 1; i < filas.length; i++) {
+        const clave = filas[i][0];
+        const valor = filas[i][1];
 
-      const headers = filas[0];
-      const valores = filas[1];
+        if (!clave || !valor) continue;
 
-      headers.forEach((id, i) => {
-        const valor = valores[i];
-        if (!valor) return;
+        const el = document.getElementById(clave);
+        if (!el) continue;
 
-        const el = document.getElementById(id);
-        if (!el) return;
-
-        if (id === "linkedin") {
+        if (clave === "linkedin") {
           el.href = valor;
-        } else if (id === "email") {
+        } 
+        else if (clave === "email") {
           el.href = "mailto:" + valor;
           el.textContent = valor;
-        } else {
+        } 
+        else {
           el.textContent = valor;
         }
-      });
+      }
     })
     .catch(err => console.error("Error cargando perfil:", err));
 
-  // EXPERIENCIA
+  // EXPERIENCIA (mock)
   const experiencia = [
     {
       puesto: "Empleado administrativo",
@@ -68,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     experienciaDiv.appendChild(div);
   });
 
-  // CURSOS AGRUPADOS
+  // CURSOS AGRUPADOS (mock)
   const cursosAgrupados = {
     "Administración": ["Gestión PyME", "Administración general"],
     "Tecnología": ["Domótica", "Robótica"],
