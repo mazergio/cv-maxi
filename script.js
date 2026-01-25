@@ -4,10 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY/gviz/tq?tqx=out:csv&gid=0";
 
   fetch(perfilURL)
-    .then(res => {
-      if (!res.ok) throw new Error("No se pudo cargar el CSV");
-      return res.text();
-    })
+    .then(res => res.text())
     .then(text => {
 
       const filas = text
@@ -19,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
            .map(c => c.replace(/^"|"$/g, "").trim())
         );
 
-      // fila 0 = headers ("clave","valor")
+      // filas[0] = encabezados → "clave","valor"
       for (let i = 1; i < filas.length; i++) {
         const clave = filas[i][0];
         const valor = filas[i][1];
@@ -65,19 +62,17 @@ document.addEventListener("DOMContentLoaded", () => {
     experienciaDiv.appendChild(div);
   });
 
-  // CURSOS AGRUPADOS (mock)
+  // CURSOS (mock)
   const cursosAgrupados = {
     "Administración": ["Gestión PyME", "Administración general"],
     "Tecnología": ["Domótica", "Robótica"],
-    "Electricidad": ["Instalaciones eléctricas"],
     "Educación / Filosofía": ["Didáctica", "Filosofía"]
   };
 
   const cursosDiv = document.getElementById("cursos-agrupados");
   for (const area in cursosAgrupados) {
     const div = document.createElement("div");
-    div.className = "area-group";
-    div.innerHTML = `<strong>${area}</strong> ▸ ${cursosAgrupados[area].join(" | ")}`;
+    div.innerHTML = `<strong>${area}</strong>: ${cursosAgrupados[area].join(" | ")}`;
     cursosDiv.appendChild(div);
   }
 
