@@ -1,25 +1,22 @@
-alert("JS NUEVO CARGADO");
 document.addEventListener("DOMContentLoaded", () => {
 
   const perfilURL =
-    "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY/gviz/tq?tqx=out:csv&gid=0";
+    "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY/export?format=csv&gid=0";
 
   fetch(perfilURL)
     .then(res => res.text())
     .then(text => {
 
-      // normaliza saltos de línea y BOM
-      text = text.replace(/\uFEFF/g, "").trim();
+      console.log("CSV crudo:", text);
 
       const filas = text
         .split(/\r?\n/)
         .map(f => f.trim())
         .filter(Boolean)
-        .map(f => {
-          // detecta separador automáticamente
-          const sep = f.includes(";") ? ";" : ",";
-          return f.split(sep).map(c => c.replace(/^"|"$/g, "").trim());
-        });
+        .map(f =>
+          f.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+           .map(c => c.replace(/^"|"$/g, "").trim())
+        );
 
       for (let i = 1; i < filas.length; i++) {
         const clave = filas[i][0];
