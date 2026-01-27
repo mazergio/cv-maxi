@@ -291,4 +291,17 @@ fetch(experienciaURL)
       }
     })
     .catch(err => console.error("Error cargando habilidades:", err)); 
+
+  // =========================
+// PDF
+// =========================
+
+const btnPdf = document.getElementById("btn-pdf");
+if (btnPdf) {
+  btnPdf.addEventListener("click", e => {
+    e.preventDefault();
+    window.print();
+  });
+}
+
 });
