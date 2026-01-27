@@ -111,28 +111,37 @@ document.getElementById("ultima_actualizacion").textContent =
       const experienciaDiv = document.getElementById("experiencia");
       experienciaDiv.innerHTML = "";
 
-      for (let i = 1; i < filas.length; i++) {
-        const fila = {};
-        headers.forEach((h, idx) => fila[h] = filas[i][idx]);
+      const items = [];
 
-        if (fila.mostrar !== "TRUE") continue;
+for (let i = 1; i < filas.length; i++) {
+  const fila = {};
+  headers.forEach((h, idx) => fila[h] = filas[i][idx]);
 
-        const fechas = `${fila.fecha_inicio} - ${fila.fecha_fin}`;
+  if (fila.mostrar !== "TRUE") continue;
 
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `
-          <strong>${fila.puesto}</strong> – ${fila.empresa}<br>
-          <em>${fechas}</em><br>
-          ${fila.descripcion_breve}
-        `;
+  fila._orden = parseInt(fila.orden) || 999;
+  items.push(fila);
+}
 
+// ordenar por orden ascendente
+items.sort((a, b) => a._orden - b._orden);
+
+// render
+items.forEach(fila => {
+  const fechas = `${fila.fecha_inicio} - ${fila.fecha_fin}`;
+
+  const div = document.createElement("div");
+  div.className = "item";
+  div.innerHTML = `
+    <strong>${fila.puesto}</strong> – ${fila.empresa}<br>
+    <em>${fechas}</em><br>
+    ${fila.descripcion_breve}
+  `;
         experienciaDiv.appendChild(div);
-      }
-    })
-    .catch(err => console.error("Error cargando experiencia:", err));
+    });
 
-});
+    .catch(err => console.error("Error cargando experiencia:", err));
+  });
 
 
   // =========================
@@ -251,4 +260,5 @@ document.getElementById("ultima_actualizacion").textContent =
         habilidadesDiv.appendChild(catDiv);
       }
     })
-    .catch(err => console.error("Error cargando habilidades:", err));
+    .catch(err => console.error("Error cargando habilidades:", err)); 
+    
