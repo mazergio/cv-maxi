@@ -67,6 +67,24 @@ if (config.tema === "oscuro") {
   document.body.classList.add("tema-oscuro");
 }
 
+// =========================
+// QR EN FOOTER
+// =========================
+console.log("QR URL leída desde config:", config.qr_url);
+if (config.qr_url) {
+  const qrDiv = document.getElementById("qr-container");
+
+  if (qrDiv) {
+    const img = document.createElement("img");
+    img.src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
+      encodeURIComponent(config.qr_url);
+
+    img.alt = "QR";
+    qrDiv.appendChild(img);
+  }
+}
+
   })
   .catch(err => console.error("Error cargando config:", err));
   

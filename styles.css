@@ -112,3 +112,14 @@ body.tema-oscuro a {
     text-align: center;
   }
 }
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#qr-container img {
+  width: 70px;
+  height: 70px;
+}
