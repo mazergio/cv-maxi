@@ -39,6 +39,26 @@ fetch(configURL)
 
 document.getElementById("ultima_actualizacion").textContent =
   "Última actualización: " + config.ultima_actualizacion;
+
+// =========================
+// TOGGLES DE SECCIONES
+// =========================
+
+if (config.mostrar_experiencia !== "TRUE") {
+  const s = document.getElementById("section-experiencia");
+  if (s) s.style.display = "none";
+}
+
+if (config.mostrar_cursos !== "TRUE") {
+  const s = document.getElementById("section-cursos");
+  if (s) s.style.display = "none";
+}
+
+if (config.mostrar_habilidades !== "TRUE") {
+  const s = document.getElementById("section-habilidades");
+  if (s) s.style.display = "none";
+}
+
   })
   .catch(err => console.error("Error cargando config:", err));
   
