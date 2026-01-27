@@ -292,15 +292,28 @@ fetch(experienciaURL)
     })
     .catch(err => console.error("Error cargando habilidades:", err)); 
 
-  // =========================
-// PDF
+ // =========================
+// PDF CON NOMBRE AUTOMÁTICO
 // =========================
 
 const btnPdf = document.getElementById("btn-pdf");
+
 if (btnPdf) {
   btnPdf.addEventListener("click", e => {
     e.preventDefault();
+
+    const nombre =
+      config.nombre_pdf ||
+      `CV_${(config.nombre_completo || "Perfil").replace(/\s+/g, "_")}`;
+
+    const originalTitle = document.title;
+    document.title = nombre;
+
     window.print();
+
+    setTimeout(() => {
+      document.title = originalTitle;
+    }, 1000);
   });
 }
 
