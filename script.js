@@ -59,6 +59,14 @@ if (config.mostrar_habilidades !== "TRUE") {
   if (s) s.style.display = "none";
 }
 
+// =========================
+// TEMA CLARO / OSCURO
+// =========================
+
+if (config.tema === "oscuro") {
+  document.body.classList.add("tema-oscuro");
+}
+
   })
   .catch(err => console.error("Error cargando config:", err));
   
