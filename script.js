@@ -54,6 +54,11 @@ if (config.mostrar_habilidades !== "TRUE") {
   if (s) s.style.display = "none";
 }
 
+if (config.mostrar_formacion !== "TRUE") {
+  const s = document.getElementById("section-formacion");
+  if (s) s.style.display = "none";
+}
+
 // =========================
 // TEMA CLARO / OSCURO
 // =========================
@@ -201,6 +206,68 @@ fetch(experienciaURL)
 
   })
   .catch(err => console.error("Error cargando experiencia:", err));
+
+
+ // =========================
+// FORMACIÓN FORMAL / ACADÉMICA
+// =========================
+
+const formacionURL =
+  "https://docs.google.com/spreadsheets/d/1Hx-C_mXVmLKO06n6MMt4bSjpT5jFLsmCqPw4SCR3kCY/export?format=csv&gid=1811640880";
+
+fetch(formacionURL)
+  .then(res => res.text())
+  .then(text => {
+
+    const filas = text
+      .split(/\r?\n/)
+      .map(f => f.trim())
+      .filter(Boolean)
+      .map(f =>
+        f.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+         .map(c => c.replace(/^"|"$/g, "").trim())
+      );
+
+    const headers = filas[0];
+    const formacionDiv = document.getElementById("formacion-formal");
+    formacionDiv.innerHTML = "";
+
+    const items = [];
+
+    for (let i = 1; i < filas.length; i++) {
+      const fila = {};
+      headers.forEach((h, idx) => fila[h] = filas[i][idx]);
+
+      if (fila.mostrar !== "TRUE") continue;
+
+      fila._orden = parseInt(fila.orden) || 999;
+      items.push(fila);
+    }
+
+    // ordenar por orden
+    items.sort((a, b) => a._orden - b._orden);
+
+    // render - ¡IMPORTANTE! Usa TUS nombres de columna:
+    items.forEach(fila => {
+      // Crea el texto de fechas. Si anio_fin está vacío, muestra solo el inicio.
+      const fechas = fila.anio_fin ? `${fila.anio_inicio} - ${fila.anio_fin}` : `${fila.anio_inicio}`;
+      
+      // Opcional: Añade el 'nivel' si no está vacío (ej: "Licenciatura", "Secundario")
+      const infoNivel = fila.nivel ? ` (${fila.nivel})` : '';
+
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <strong>${fila.titulo}${infoNivel}</strong><br>
+        <em>${fila.institucion}</em><br>
+        <small>${fechas} ${fila.estado ? `- ${fila.estado}` : ''}</small>
+      `;
+
+      formacionDiv.appendChild(div);
+    });
+
+  })
+  .catch(err => console.error("Error cargando formación formal:", err));
 
 
   // =========================
