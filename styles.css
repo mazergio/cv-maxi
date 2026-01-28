@@ -1,125 +1,529 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 40px;
-  color: #222;
-  background: #fff;
+/* =========================
+   VARIABLES & RESET
+   ========================= */
+:root {
+  /* Tema claro (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-accent: #e0f2fe;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --accent-primary: #0ea5e9;
+  --accent-secondary: #7dd3fc;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
 }
 
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 16px;
+  font-weight: 400;
+  min-height: 100vh;
+  padding: var(--spacing-md);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HEADER CON BANNER MODERNO
+   ========================= */
 .header {
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 20px;
-  margin-bottom: 30px;
+  background: linear-gradient(135deg, var(--bg-accent) 0%, #f0f9ff 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(45deg, var(--accent-secondary) 0%, transparent 70%);
+  border-radius: 0 0 0 100px;
+  opacity: 0.3;
 }
 
 .header h1 {
-  margin: 0;
-  font-size: 32px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+  position: relative;
+  z-index: 1;
 }
 
 .header h2 {
-  margin: 5px 0;
-  font-size: 20px;
-  font-weight: normal;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: var(--spacing-xs);
+  position: relative;
+  z-index: 1;
+}
+
+.header h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  z-index: 1;
+}
+
+.header p {
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-xs);
+  position: relative;
+  z-index: 1;
+}
+
+/* Contenedor para foto (añadir en HTML si necesitas foto) */
+.photo-container {
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--bg-primary);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--bg-secondary);
+  z-index: 2;
+}
+
+.photo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.links {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 .links a {
-  margin-right: 15px;
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-primary);
+  color: var(--accent-primary);
   text-decoration: none;
-  color: #444;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
+.links a:hover {
+  background-color: var(--accent-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* =========================
+   SECCIONES DEL CV
+   ========================= */
 .section {
-  margin-bottom: 30px;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border-left: 4px solid var(--accent-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .section h3 {
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
+.section h3::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-primary);
+  border-radius: 50%;
+}
+
+#resumen_profesional {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* Experiencia laboral */
 .item {
-  margin-bottom: 10px;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-secondary);
+  transition: transform 0.3s ease;
 }
 
+.item:hover {
+  transform: translateX(4px);
+}
+
+.item strong {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.item em {
+  font-style: normal;
+  font-size: 0.9rem;
+  color: var(--accent-primary);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.item br + em {
+  margin-top: 0.25rem;
+}
+
+/* Formación y habilidades */
 .area-group {
-  margin-bottom: 10px;
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
 }
 
 .area-group strong {
   display: block;
-  margin-bottom: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.area-group strong::after {
+  content: ' ▸';
+  color: var(--accent-primary);
 }
 
 /* =========================
-   TEMA OSCURO
+   FOOTER
    ========================= */
-
-body.tema-oscuro {
-  background-color: #111;
-  color: #eaeaea;
-}
-
-body.tema-oscuro .section {
-  border-color: #333;
-}
-
-body.tema-oscuro a {
-  color: #8ab4f8;
-}
-
-/* =========================
-   PRINT / PDF
-   ========================= */
-
-@media print {
-  body {
-    background: white !important;
-    color: black !important;
-    font-size: 11pt;
-  }
-
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .links {
-    display: none;
-  }
-
-  .section {
-    page-break-inside: avoid;
-    margin-bottom: 16px;
-  }
-
-  h1, h2, h3 {
-    color: black !important;
-  }
-
-  a {
-    color: black;
-    text-decoration: none;
-  }
-
-  footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 9pt;
-    text-align: center;
-  }
+.footer {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 .footer-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
 }
 
 #qr-container img {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  padding: 4px;
+  background-color: white;
+}
+
+/* =========================
+   TEMA OSCURO
+   ========================= */
+body.tema-oscuro {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-accent: #1e3a8a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --accent-primary: #38bdf8;
+  --accent-secondary: #0ea5e9;
+  --border-color: #334155;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+body.tema-oscuro .header {
+  background: linear-gradient(135deg, var(--bg-accent) 0%, #1a237e 100%);
+}
+
+body.tema-oscuro .links a {
+  background-color: var(--bg-secondary);
+  color: var(--accent-primary);
+}
+
+body.tema-oscuro .links a:hover {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* =========================
+   IMPRESIÓN / PDF
+   ========================= */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+    padding: 0.5in;
+  }
+
+  .header {
+    background: #f0f9ff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 1cm;
+    padding: 1cm;
+  }
+
+  .header::before {
+    display: none;
+  }
+
+  .section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    margin-bottom: 0.8cm;
+  }
+
+  .links a {
+    color: #0066cc !important;
+    text-decoration: underline;
+    background: none !important;
+    border: none !important;
+  }
+
+  .links a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.9em;
+    color: #666;
+  }
+
+  .item, .area-group {
+    background: white !important;
+    border: 1px solid #eee !important;
+  }
+
+  .footer {
+    border-top: 1px solid #ccc;
+    margin-top: 1cm;
+  }
+
+  #qr-container img {
+    filter: grayscale(100%);
+  }
+
+  /* Ocultar elementos no esenciales para impresión */
+  .photo-container {
+    display: none;
+  }
+
+  .links a:hover {
+    transform: none !important;
+  }
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+@media (max-width: 768px) {
+  body {
+    padding: var(--spacing-sm);
+    font-size: 15px;
+  }
+
+  .header {
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .photo-container {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin: 0 auto var(--spacing-md);
+  }
+
+  .links {
+    justify-content: center;
+  }
+
+  .section {
+    padding: var(--spacing-md);
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.75rem;
+  }
+
+  .links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .links a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .area-group strong::after {
+    content: '';
+  }
+}
+
+/* =========================
+   ESTILOS PARA PÁGINA DE CERTIFICACIONES
+   ========================= */
+.header h1 + p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.header p a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.header p a:hover {
+  text-decoration: underline;
+}
+
+.section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.section li {
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-primary);
+}
+
+.section li strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+}
+
+.section li a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.section li a:hover {
+  text-decoration: underline;
+}
+
+.section li a::after {
+  content: '↗';
+  font-size: 0.9em;
+}
+
+/* =========================
+   ANIMACIONES SUAVES
+   ========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.item {
+  animation: fadeIn 0.5s ease-out;
 }
