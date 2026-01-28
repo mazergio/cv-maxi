@@ -330,71 +330,80 @@ body.tema-oscuro .links a:hover {
    IMPRESIÓN / PDF
    ========================= */
 @media print {
+  /* 1. Asegurar que la foto se muestre y tenga buen tamaño */
+  .photo-container {
+    display: block !important;
+    position: relative !important;
+    float: right;
+    margin: -20px 0 20px 20px;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .photo-container img {
+    width: 100% !important;
+    height: 100% !important;
+    border: 2px solid #ddd !important;
+    box-shadow: none !important;
+  }
+  
+  /* 2. Asegurar que el encabezado tenga espacio para la foto */
+  .header {
+    position: relative;
+    min-height: 120px;
+    overflow: visible;
+  }
+  
+  /* 3. Asegurar que los fondos y colores se impriman */
   body {
     background: white !important;
     color: black !important;
-    font-size: 12pt;
-    line-height: 1.5;
-    padding: 0.5in;
+    font-size: 11pt;
+    line-height: 1.4;
   }
-
-  .header {
-    background: #f0f9ff !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    border-radius: 0;
-    box-shadow: none;
-    margin-bottom: 1cm;
-    padding: 1cm;
+  
+  /* 4. Mejorar la legibilidad de los enlaces */
+  a {
+    color: black !important;
+    text-decoration: underline !important;
   }
-
-  .header::before {
-    display: none;
-  }
-
-  .section {
-    page-break-inside: avoid;
-    break-inside: avoid;
-    box-shadow: none;
-    border: 1px solid #ddd;
-    margin-bottom: 0.8cm;
-  }
-
-  .links a {
-    color: #0066cc !important;
-    text-decoration: underline;
-    background: none !important;
-    border: none !important;
-  }
-
+  
   .links a::after {
     content: " (" attr(href) ")";
     font-size: 0.9em;
     color: #666;
   }
-
-  .item, .area-group {
-    background: white !important;
-    border: 1px solid #eee !important;
+  
+  /* 5. Optimizar contenedores para evitar cortes */
+  .section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 0.8cm;
   }
-
-  .footer {
-    border-top: 1px solid #ccc;
-    margin-top: 1cm;
+  
+  /* 6. Ocultar elementos innecesarios para impresión */
+  .links a:hover,
+  .btn-pdf {
+    display: none !important;
   }
-
+  
+  /* 7. Asegurar que el QR se imprima (si lo usas) */
   #qr-container img {
-    filter: grayscale(100%);
+    filter: grayscale(100%) contrast(120%);
+    width: 70px !important;
+    height: 70px !important;
   }
-
-  /* Ocultar elementos no esenciales para impresión */
-  .photo-container {
-    display: none;
+  
+  /* 8. Mejorar espaciados generales */
+  .header,
+  .section {
+    padding: 0.2cm !important;
   }
-
-  .links a:hover {
-    transform: none !important;
-  }
+  
+  /* 9. Asegurar que los fondos de colores se impriman */
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  color-adjust: exact !important;
 }
 
 /* =========================
