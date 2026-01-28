@@ -88,7 +88,7 @@ if (config.qr_url) {
 // =========================
     // CARGAR FOTO DESDE CONFIG
     // =========================
-    const fotoElement = document.getElementById('foto-cv');
+const fotoElement = document.getElementById('foto-cv');
 if (config.foto_url && fotoElement) {
   console.log('Intentando cargar foto desde:', config.foto_url); // <-- Añade esta línea para debug
   fotoElement.src = config.foto_url;
@@ -99,7 +99,8 @@ if (config.foto_url && fotoElement) {
     this.style.display = 'none';
   };
 }
-  })
+
+})
   .catch(err => console.error("Error cargando config:", err));
   
 
