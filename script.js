@@ -134,30 +134,20 @@ if (config.qr_url) {
     // CARGAR FOTO DESDE CONFIG
     // =========================
     const fotoElement = document.getElementById('foto-cv');
-    if (config.foto_url && fotoElement) {
-      fotoElement.src = config.foto_url;
-      // Fallback por si la foto no carga
-      fotoElement.onerror = function() {
-        this.style.display = 'none';
-        console.log('Foto no disponible:', config.foto_url);
-      };
-    }
+if (config.foto_url && fotoElement) {
+  console.log('Intentando cargar foto desde:', config.foto_url); // <-- Añade esta línea para debug
+  fotoElement.src = config.foto_url;
+  
+  // Fallback por si la foto no carga
+  fotoElement.onerror = function() {
+    console.error('La foto no pudo cargarse.');
+    this.style.display = 'none';
+  };
+}
     
   })
   .catch(err => console.error("Error cargando perfil:", err));
-  
-// =========================
-// FOTO DE PERFIL
-// =========================
-const fotoElement = document.getElementById('foto-cv');
-if (config.foto_url && fotoElement) {
-  fotoElement.src = config.foto_url;
-  // Añade un fallback por si la foto no carga
-  fotoElement.onerror = function() {
-    this.src = 'foto-placeholder.jpg';
-    this.alt = 'Foto no disponible';
-  };
-}
+
 
 // =========================
 // EXPERIENCIA LABORAL
