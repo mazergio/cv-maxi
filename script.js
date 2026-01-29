@@ -135,15 +135,42 @@ if (config.foto_url && fotoElement) {
         if (!el) continue;
 
         if (clave === "linkedin") {
-          el.href = valor;
-        }
-        else if (clave === "email") {
-          el.href = "mailto:" + valor;
-          el.textContent = valor;
-        }
-        else {
-          el.textContent = valor;
-        }
+  el.href = valor;
+  // Si el enlace de LinkedIn está dentro del nuevo contenedor .links, mantenemos esta lógica
+} else if (clave === "email") {
+  // 1. Configura el enlace de email en la barra .links (para la web)
+  const emailLinkInHeader = document.querySelector('.links a#email');
+  if (emailLinkInHeader) {
+    emailLinkInHeader.href = "mailto:" + valor;
+    emailLinkInHeader.textContent = valor;
+  }
+  
+  // 2. Asigna el texto del email al elemento con ícono (visible en web)
+  const emailContactItem = document.getElementById('email');
+  if (emailContactItem) {
+    const textSpan = emailContactItem.querySelector('.contact-text');
+    if (textSpan) textSpan.textContent = valor;
+  }
+  
+  // 3. Asigna el mismo texto al elemento especial para impresión
+  const emailPrintItem = document.getElementById('email-print');
+  if (emailPrintItem) {
+    const printTextSpan = emailPrintItem.querySelector('.contact-text');
+    if (printTextSpan) printTextSpan.textContent = valor;
+  }
+} else if (clave === "telefono" || clave === "ubicacion") {
+  // Para teléfono y ubicación, asigna el texto al span dentro del contacto
+  const textSpan = el.querySelector('.contact-text');
+  if (textSpan) {
+    textSpan.textContent = valor;
+  } else {
+    // Fallback por si la nueva estructura no está presente
+    el.textContent = valor;
+  }
+} else {
+  // Para otros elementos (como nombre_completo, titulo_principal)
+  el.textContent = valor;
+}
       }
 
   })

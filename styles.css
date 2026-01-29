@@ -172,6 +172,65 @@ body {
 }
 
 /* =========================
+   ÍCONOS DE CONTACTO
+   ========================= */
+.contact-info,
+.contact-item,
+#email-print.solo-impresion {
+  color: #555 !important; /* Un gris medio oscuro, profesional para imprimir */
+  font-size: 9.5pt !important;
+}
+
+/* Asegura que los íconos tengan un color consistente (gris) */
+.contact-item::before,
+#email-print.solo-impresion::before {
+  filter: brightness(0.3) !important; /* Convierte íconos azules a gris */
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Estilos base para los íconos (usando pseudo-elementos) */
+.contact-item::before {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0; /* Evita que el ícono se reduzca */
+}
+
+/* Ícono de UBICACIÓN */
+#ubicacion.contact-item::before {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237dd3fc'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E");
+}
+
+/* Ícono de TELÉFONO */
+#telefono.contact-item::before {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237dd3fc'%3E%3Cpath d='M20 15.5c-1.2 0-2.5-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.5-5.2-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.4-.5-3.6 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1zM19 12h2c0-4.97-4.03-9-9-9v2c3.87 0 7 3.13 7 7zm-4 0h2c0-2.76-2.24-5-5-5v2c1.66 0 3 1.34 3 3z'/%3E%3C/svg%3E");
+}
+
+/* Ícono de EMAIL (visible en web) */
+#email.contact-item::before {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237dd3fc'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
+}
+
+/* Oculta el email especial para impresión en la web */
+.solo-impresion {
+  display: none;
+}
+
+/* =========================
    SECCIONES DEL CV
    ========================= */
 .section {
@@ -345,7 +404,7 @@ body.tema-oscuro .links a:hover {
     padding: 0.5cm !important; /* Márgenes mínimos */
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /* 2. HEADER - Más compacto pero con espacio para respirar */
@@ -478,6 +537,52 @@ body.tema-oscuro .links a:hover {
   .area-group {
     page-break-inside: avoid;
   }
+
+  /* =========================
+     MANEJO ESPECIAL DEL EMAIL
+     ========================= */
+/* Opcional: si quieres ocultar la barra de enlaces .links al imprimir */
+.links {
+  display: none !important;
+}
+
+/* Dentro de @media print - Asegurar que solo un email sea visible */
+
+/* 1. Oculta el email original (el que es un enlace y tiene ícono) */
+#email.contact-item {
+  display: none !important;
+}
+
+/* Color general para toda la info de contacto al imprimir */
+.contact-item,
+#email-print.solo-impresion {
+  color: #555 !important; /* Un gris medio oscuro, profesional para imprimir */
+}
+
+/* 2. Asegura que el email especial para impresión SI se vea y herede estilos */
+#email-print.solo-impresion {
+  display: flex !important;
+  font-size: 9.5pt !important;
+  /* ELIMINA la línea: color: #333 !important; */
+  /* En su lugar, asegura que herede el color del contexto de impresión */
+  color: inherit !important;
+  margin: 0.05cm 0 !important;
+}
+/* 2b. Aplica el ícono de email al elemento de impresión también */
+#email-print.solo-impresion::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  /* CAMBIA %23333 por %23555 para que sea gris (#555) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
+  /* Ya no necesitamos filter: brightness(0.7) porque el SVG ya es gris */
+}
+
 }
 
 /* =========================

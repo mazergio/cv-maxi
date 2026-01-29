@@ -20,8 +20,24 @@
   <h1 id="nombre_completo"></h1>
   <h2 id="titulo_principal"></h2>
   <h3 id="subtitulo"></h3>
-  <p id="ubicacion"></p>
-  <p id="telefono"></p>
+  <div class="contact-info">
+  <p id="ubicacion" class="contact-item">
+    <!-- El ícono de ubicación se añadirá por CSS -->
+    <span class="contact-text"></span>
+  </p>
+  <p id="telefono" class="contact-item">
+    <!-- El ícono de teléfono se añadirá por CSS -->
+    <span class="contact-text"></span>
+  </p>
+  <p id="email" class="contact-item">
+    <!-- El ícono de email se añadirá por CSS -->
+    <span class="contact-text"></span>
+  </p>
+  <!-- Este es el email que SOLO se verá al imprimir, oculto en web -->
+  <p id="email-print" class="contact-item solo-impresion">
+    <span class="contact-text"></span>
+  </p>
+</div>
 
   <div class="links">
     <a id="linkedin" href="#" target="_blank">LinkedIn</a>
